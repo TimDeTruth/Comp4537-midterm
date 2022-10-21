@@ -182,10 +182,7 @@ app.get("*", (req, res) => {
 
 
 // PART 2
-
-
 // const possibilities = pokemonArrayFromPokedex.filter(({ name }) => poke_regex.test(name.english))
-
 let poke_regex = /pika.*/i
 app.get("/api/v1/getPokemonswithRegex?searchQuery=pika_", async (req, res) => {
   try {
@@ -198,7 +195,22 @@ app.get("/api/v1/getPokemonswithRegex?searchQuery=pika_", async (req, res) => {
   } catch (err) { res.json(handleErr(err)) }
 })
 
-let poke_regex2 = /(.*ika\w*)|[ika]/i
+
+let poke_regex2 = /\w*chu/i
+app.get("/api/v1/getPokemonswithRegex?searchQuery=picu", async (req, res) => {
+  try {
+    const docs = await pokeModel.find({ name: { $regex: req.query.searchQuery } })
+    // console.log(docs);
+    res.json({
+      msg: "Found Successfully",
+      pokeInfo: docs
+    })
+  } catch (err) { res.json(handleErr(err)) }
+})
+
+
+
+let poke_regex3 = /(.*ika\w*)|[ika]/i
 app.get("/api/v1/getPokemonswithRegex?searchQuery=picu", async (req, res) => {
   try {
     const docs = await pokeModel.find({ name: { $regex: req.query.searchQuery } })
